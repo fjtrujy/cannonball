@@ -166,6 +166,16 @@ else ifneq (,$(filter $(platform), ps3 sncps3 psl1ght))
       AR = $(PS3DEV)/ppu/bin/ppu-ar$(EXE_EXT)
    endif
 
+# PS2
+else ifeq ($(platform), ps2)
+   TARGET := $(TARGET_NAME)_libretro_$(platform).a
+   CC = ee-gcc$(EXE_EXT)
+   CXX = ee-g++$(EXE_EXT)
+   AR = ee-ar$(EXE_EXT)
+   FLAGS += -DPS2 -G0 -Wl
+   STATIC_LINKING = 1
+   EXTRA_INCLUDES := -Ips2/
+
 # PSP
 else ifeq ($(platform), psp1)
    TARGET := $(TARGET_NAME)_libretro_$(platform).a
@@ -455,8 +465,7 @@ WARNINGS := -Wall \
 	-Wno-unused-variable \
 	-Wno-unused-function \
 	-Wno-uninitialized \
-	$(NEW_GCC_WARNING_FLAGS) \
-	-Wno-strict-aliasing
+	$(NEW_GCC_WARNING_FLAGS)
 EXTRA_GCC_FLAGS := -funroll-loops
 endif
 
